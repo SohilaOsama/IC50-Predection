@@ -7,9 +7,9 @@ import joblib
 from PIL import Image
 
 # Load the saved XGBoost model and scalers
-best_model = joblib.load('xgb_model_filtered1.pkl')  # Load XGBoost model
-scaler_y = joblib.load('y_scaler_filtered1.pkl')  # Load y-scaler
-scaler_X = joblib.load('X_scaler_filtered1.pkl')  # Load X-scaler
+best_model = joblib.load('xgb_model_filtered2.pkl')  # Load XGBoost model
+scaler_y = joblib.load('y_scaler_filtered2.pkl')  # Load y-scaler
+scaler_X = joblib.load('X_scaler_filtered2.pkl')  # Load X-scaler
 
 # Function to convert SMILES to MACCS fingerprints
 def smiles_to_maccs(smiles):
