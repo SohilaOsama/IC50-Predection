@@ -134,7 +134,7 @@ def predict_page():
     if st.button("Predict"):
         prediction, features = predict_ic50(smiles_input)
         if prediction is not None:
-            st.success(f"Predicted IC50: {prediction:.4f}")
+            st.success(f"Predicted IC50: {prediction:.4f} µM")
             st.write("**Generated Features:**")
             st.dataframe(features)
         else:
