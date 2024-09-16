@@ -132,7 +132,7 @@ def home_page():
 
     # Display an image on the homepage
     image = Image.open('assets/virus.jpg')  # Replace with your image path
-    st.image(image, use_column_width=True)
+    st.image(image, use_column_width=True) 
 
     st.write("""
         IC50 measures the effectiveness of a substance in inhibiting a specific biological or biochemical function. 
