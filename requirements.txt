@@ -1,26 +1,10 @@
-<<<<<<< HEAD
-streamlit
-pandas
-numpy
-scikit-learn
-joblib
-xgboost
-lightgbm
-matplotlib
-rdkit
-=======
-streamlit
-pandas
-numpy
-scikit-learn
-joblib
-xgboost
-lightgbm
-matplotlib
-rdkit
-py3Dmol
-pillow
-rdkit-pypi
->>>>>>> 78bc57d958fa296eb1f8cb26e4390fa73a0ddeab
-
->>>>>>> 6b387441662cf22f655d25745411eb9bfd65a5dd
+pandas==1.5.0
+numpy==1.23.3
+scikit-learn==1.2.0
+joblib==1.2.0
+xgboost==1.7.5
+lightgbm==3.3.2
+matplotlib==3.6.0
+rdkit-pypi==2023.03.2
+py3Dmol==0.4.0
+pillow==9.2.0
