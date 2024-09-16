@@ -8,3 +8,4 @@ lightgbm
 matplotlib
 rdkit
 py3Dmol
+pillow
