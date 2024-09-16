@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from rdkit import Chem
+from rdkit.Chem import Descriptors, rdMolDescriptors
 from rdkit.Chem import MACCSkeys
 import joblib
 from PIL import Image
@@ -19,6 +20,28 @@ def smiles_to_maccs(smiles):
         return np.zeros(166, dtype=int)  # Return a default array of 166 bits if SMILES is invalid
     maccs_fingerprint = MACCSkeys.GenMACCSKeys(molecule)
     return np.array(list(maccs_fingerprint)[1:], dtype=int)  # Discard the first bit
+
+# Function to extract features from SMILES
+def extract_features(smiles):
+    molecule = Chem.MolFromSmiles(smiles)
+    if molecule is None:
+        st.error("Invalid SMILES string.")
+        return None
+    
+    # Extract molecular descriptors
+    features = {
+        'MolecularWeight': Descriptors.MolWt(molecule),
+        'LogP': Descriptors.MolLogP(molecule),
+        'HydrogenBondDonors': Descriptors.NumHDonors(molecule),
+        'HydrogenBondAcceptors': Descriptors.NumHAcceptors(molecule),
+        'TopologicalPolarSurfaceArea': Descriptors.TPSA(molecule),
+        'NumberofRotatableBonds': Descriptors.NumRotatableBonds(molecule),
+        'NumberofValenceElectrons': Descriptors.NumValenceElectrons(molecule),
+        'NumberofAromaticRings': rdMolDescriptors.CalcNumAromaticRings(molecule),
+        'Fractionofsp3Carbons': rdMolDescriptors.CalcFractionCSP3(molecule)
+    }
+    
+    return features
 
 # Function to predict pIC50 and IC50
 def predict_ic50(smiles):
@@ -40,7 +63,7 @@ def predict_ic50(smiles):
 
 # Home Page
 def home_page():
-    st.title("IC50 Prediction for COVID-19 Compounds")
+    st.title("IC50 Prediction and Feature Extraction for COVID-19 Compounds")
 
     # Display an image on the homepage
     image = Image.open('assets/virus.jpg')  # Replace with your image path
@@ -51,30 +74,39 @@ def home_page():
         Predicting the IC50 value of compounds for COVID-19 can aid in understanding their therapeutic potential.
     """)
 
-    # Add an animation or other media
-    st.markdown("""
-        <div style="text-align:center;">
-            <img src="https://assets10.lottiefiles.com/packages/lf20_u4yrau.json" alt="Virus Animation" height="300">
-        </div>
-    """, unsafe_allow_html=True)
-
     # Navigation button
-    if st.button("Start Prediction"):
+    if st.button("Start Prediction and Extraction"):
         st.session_state.page = "predict_page"
 
 # Prediction Page
 def predict_page():
-    st.title("Predict IC50 Value")
+    st.title("Predict IC50 Value and Extract Features")
 
     smiles_input = st.text_input("Enter SMILES String", "")
 
-    if st.button("Predict"):
+    if st.button("Predict and Extract Features"):
         predicted_ic50, predicted_pic50 = predict_ic50(smiles_input)
-        if predicted_ic50 is not None:
-            # st.success(f"Predicted pIC50: {predicted_pic50:.4f}")
+        features = extract_features(smiles_input)
+
+        if predicted_ic50 is not None and features is not None:
+            # Display IC50 prediction
             st.success(f"Predicted IC50: {predicted_ic50:.4f} µM")
+            
+            # Display extracted features in a table
+            st.write("### Extracted Features:")
+            feature_df = pd.DataFrame([features])
+            st.write(feature_df)
+
+            # Button to download features as CSV
+            csv = feature_df.to_csv(index=False)
+            st.download_button(
+                label="Download features as CSV",
+                data=csv,
+                file_name='compound_features.csv',
+                mime='text/csv'
+            )
         else:
-            st.error("Unable to generate prediction. Please check the SMILES string.")
+            st.error("Unable to generate prediction or extract features. Please check the SMILES string.")
 
     # Navigation buttons for another prediction or returning home
     if st.button("Another Prediction"):
