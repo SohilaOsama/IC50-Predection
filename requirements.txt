@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 streamlit
 pandas
 numpy
@@ -7,3 +8,17 @@ xgboost
 lightgbm
 matplotlib
 rdkit
+=======
+streamlit
+pandas
+numpy
+scikit-learn
+joblib
+xgboost
+lightgbm
+matplotlib
+rdkit
+py3Dmol
+pillow
+rdkit-pypi
+>>>>>>> 78bc57d958fa296eb1f8cb26e4390fa73a0ddeab
