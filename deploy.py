@@ -3,8 +3,7 @@ import numpy as np
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors, rdMolDescriptors
-from rdkit.Chem import MACCSkeys
-from rdkit.Chem import Draw
+from rdkit.Chem import MACCSkeys, Draw
 import joblib
 from PIL import Image
 
