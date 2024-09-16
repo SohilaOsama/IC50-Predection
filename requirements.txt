@@ -22,3 +22,5 @@ py3Dmol
 pillow
 rdkit-pypi
 >>>>>>> 78bc57d958fa296eb1f8cb26e4390fa73a0ddeab
+
+>>>>>>> 6b387441662cf22f655d25745411eb9bfd65a5dd
