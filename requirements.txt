@@ -7,5 +7,5 @@ xgboost==1.7.5
 lightgbm==3.3.2
 matplotlib==3.6.0
 #rdkit-pypi==2023.03.2  # Check for the correct version on PyPI
-py3Dmol==0.4.0
-pillow==9.2.0
+#py3Dmol==0.4.0
+#pillow==9.2.0
