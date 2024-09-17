@@ -82,6 +82,14 @@ def home_page():
 def predict_page():
     st.title("Predict IC50 Value and Extract Features")
 
+    # Instruction Steps
+    st.write("""
+    ## Instructions:
+    1. To convert your compound to a Simplified Molecular Input Line Entry System (SMILES), please visit this website: [decimer.ai](https://decimer.ai/) to predict the IC50 value against SARS-CoV-2.
+    
+    2. Enter your SMILES string below and press the **"Predict and Extract Features"** button. You will then receive the predicted IC50 value in μM and 2D features describing the compound, such as molecular weight.
+    """)
+
     smiles_input = st.text_input("Enter SMILES String", "")
 
     if st.button("Predict and Extract Features"):
