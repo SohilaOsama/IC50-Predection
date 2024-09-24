@@ -45,10 +45,6 @@ def load_models():
 # Load models and scalers
 xgb_model, scaler_y, scaler_X, cnn_model, classification_scaler = load_models()
 
-# ============================
-# Define Category Labels
-# ============================
-
 category_labels = {0: 'Inactive', 1: 'Active', 2: 'Semi-Active'}
 
 # ============================
