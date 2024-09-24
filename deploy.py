@@ -288,9 +288,7 @@ def predict_page():
         if st.button("Return to Home"):
             st.session_state.page = "home_page"
 
-# ============================
-# Main Application Logic
-# ============================
+
 
 # Set up initial session state
 if 'page' not in st.session_state:
