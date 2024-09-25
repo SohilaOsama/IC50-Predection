@@ -26,6 +26,10 @@ def load_models():
     """
     try:
         # Load XGBoost model and scalers for IC50 prediction
+        # Example URL where the model is hosted
+        url = 'https://github.com/SohilaOsama/IC50-Predection/blob/b1f4c7183411633a5b2d59b63529556d7d38c8ab/xgb_model_filtered2.pkl'
+        urllib.request.urlretrieve(url, 'xgb_model_filtered2.pkl')
+        
         xgb = joblib.load('xgb_model_filtered2.pkl')
         scaler_y = joblib.load('y_scaler_filtered2.pkl')
         scaler_X = joblib.load('X_scaler_filtered2.pkl')
