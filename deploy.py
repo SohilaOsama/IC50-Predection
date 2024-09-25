@@ -240,44 +240,65 @@ def predict_page():
 
                 # Display IC50 prediction
                 st.success(f"**Predicted IC50**: {predicted_ic50:.4f} µM")
+                # st.info(f"**Predicted pIC50**: {predicted_pic50:.4f}")
 
                 # Display Classification
                 st.success(f"**Classification**: {category}")
 
-                # Display molecular features
-                st.subheader("Extracted Features:")
-                st.write(pd.DataFrame([features]).T)
+                # Display extracted features in a table
+                st.write("### Extracted Features:")
+                feature_df = pd.DataFrame([features])
+                st.table(feature_df)
+
+                # Button to download features as CSV
+                csv = feature_df.to_csv(index=False)
+                st.download_button(
+                    label="Download Features as CSV",
+                    data=csv,
+                    file_name='compound_features.csv',
+                    mime='text/csv'
+                )
+
+                # New Calculations for Ligand Efficiency and others
+                if predicted_ic50 is not None and features:
+                    mw = features['MolecularWeight']
+                    logp = features['LogP']
+
+                    # Calculate new metrics
+                    ligand_efficiency = -np.log2(predicted_ic50 / 1000) / mw if predicted_ic50 > 0 else None  # in log units
+                    lipophilic_ligand_efficiency = ligand_efficiency + (logp / mw) if ligand_efficiency is not None else None
+                    ligand_efficiency_per_logp = ligand_efficiency / logp if logp != 0 else None
+
+                    # Display the new metrics
+                    st.write("### Calculated Metrics:")
+                    st.write(f"**Ligand Efficiency (LE)**: {ligand_efficiency:.4f} (log units)" if ligand_efficiency is not None else "Ligand Efficiency could not be calculated.")
+                    st.write(f"**Lipophilic Ligand Efficiency (Lipophilic LE)**: {lipophilic_ligand_efficiency:.4f} (log units)" if lipophilic_ligand_efficiency is not None else "Lipophilic Ligand Efficiency could not be calculated.")
+                    st.write(f"**Ligand Efficiency per LogP**: {ligand_efficiency_per_logp:.4f} (log units)" if ligand_efficiency_per_logp is not None else "Ligand Efficiency per LogP could not be calculated.")
+
             else:
-                st.error("An error occurred during prediction or classification.")
+                st.error("Unable to generate prediction or extract features. Please check the SMILES string.")
 
     # Navigation buttons for another prediction or returning home
     st.write("---")  # Horizontal line for separation
     col1, col2 = st.columns(2)
-
     with col1:
         if st.button("Another Prediction"):
             st.session_state.page = "predict_page"
             st.experimental_set_query_params(rerun="true")  # Simulate app rerun
-
     with col2:
         if st.button("Return to Home"):
             st.session_state.page = "home_page"
 
 # ============================
-# Main Application
+# Main Application Logic
 # ============================
 
-def main():
-    """
-    Main function to control navigation between pages.
-    """
-    if 'page' not in st.session_state:
-        st.session_state.page = "home_page"  # Default to home page
+# Set up initial session state
+if 'page' not in st.session_state:
+    st.session_state.page = 'home_page'
 
-    if st.session_state.page == "home_page":
-        home_page()
-    elif st.session_state.page == "predict_page":
-        predict_page()
-
-if __name__ == "__main__":
-    main()
+# Display the appropriate page
+if st.session_state.page == "home_page":
+    home_page()
+elif st.session_state.page == "predict_page":
+    predict_page()
