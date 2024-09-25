@@ -18,18 +18,31 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow INFO and WARNING
 # Model and Scaler Loading
 # ============================
 
+# ============================
+# Model and Scaler Loading
+# ============================
+
 @st.cache_resource
 def load_models():
     """
     Load all necessary models and scalers.
     This function is cached to prevent reloading on every interaction.
     """
+    model_files = {
+        "XGBoost": 'xgb_model_filtered2.pkl',
+        "Y Scaler": 'y_scaler_filtered2.pkl',
+        "X Scaler": 'X_scaler_filtered2.pkl',
+        "CNN": 'cnn_maccs_model_class.h5',
+        "Classification Scaler": 'scaler_class.pkl'
+    }
+
+    for model_name, file_name in model_files.items():
+        if not os.path.isfile(file_name):
+            st.error(f"{model_name} file not found: {file_name}. Please ensure the model files are uploaded in the app directory.")
+            return None, None, None, None, None
+
     try:
         # Load XGBoost model and scalers for IC50 prediction
-        # Example URL where the model is hosted
-        url = 'https://github.com/SohilaOsama/IC50-Predection/blob/main/xgb_model_filtered2.pkl'
-        urllib.request.urlretrieve(url, 'xgb_model_filtered2.pkl')
-        
         xgb = joblib.load('xgb_model_filtered2.pkl')
         scaler_y = joblib.load('y_scaler_filtered2.pkl')
         scaler_X = joblib.load('X_scaler_filtered2.pkl')
@@ -39,9 +52,6 @@ def load_models():
         scaler_cls = joblib.load('scaler_class.pkl')
 
         return xgb, scaler_y, scaler_X, cnn, scaler_cls
-    except FileNotFoundError as e:
-        st.error(f"Model or scaler file not found: {e}")
-        return None, None, None, None, None
     except Exception as e:
         st.error(f"Error loading models/scalers: {e}")
         return None, None, None, None, None
