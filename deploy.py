@@ -26,13 +26,13 @@ def load_models():
     """
     try:
         # Load XGBoost model and scalers for IC50 prediction
-        xgb = joblib.load('xgb_model_filtered2.pkl')
-        scaler_y = joblib.load('y_scaler_filtered2.pkl')
-        scaler_X = joblib.load('X_scaler_filtered2.pkl')
+        xgb = joblib.load('models/xgb_model_filtered2.pkl')
+        scaler_y = joblib.load('models/y_scaler_filtered2.pkl')
+        scaler_X = joblib.load('models/X_scaler_filtered2.pkl')
 
         # Load CNN model and scaler for classification
-        cnn = load_model('cnn_maccs_model_class.h5')
-        scaler_cls = joblib.load('scaler_class.pkl')
+        cnn = load_model('models/cnn_maccs_model_class.h5')
+        scaler_cls = joblib.load('models/scaler_class.pkl')
 
         return xgb, scaler_y, scaler_X, cnn, scaler_cls
     except FileNotFoundError as e:
