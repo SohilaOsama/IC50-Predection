@@ -26,7 +26,7 @@ def load_models():
     """
     try:
         # Load XGBoost model and scalers for IC50 prediction
-        xgb = joblib.load('xgb_model_filtered2 copy.pkl')
+        xgb = joblib.load('xgb_model_filtered2.pkl')
         scaler_y = joblib.load('y_scaler_filtered2.pkl')
         scaler_X = joblib.load('X_scaler_filtered2.pkl')
 
