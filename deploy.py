@@ -18,7 +18,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow INFO and WARNING
 # Model and Scaler Loading
 # ============================
 
-#@st.cache_resource
+@st.cache_resource
 def load_models():
     """
     Load all necessary models and scalers.
@@ -241,6 +241,10 @@ def predict_page():
                 # Display IC50 prediction
                 st.success(f"**Predicted IC50**: {predicted_ic50:.4f} µM")
                 # st.info(f"**Predicted pIC50**: {predicted_pic50:.4f}")
+                
+                # Calculate and display IC50 in molar (M)
+                predicted_ic50_molar = predicted_ic50 / 1_000_000  # Convert µM to M
+                st.success(f"**Predicted IC50**: {predicted_ic50_molar:.4e} M")
 
                 # Display Classification
                 st.success(f"**Classification**: {category}")
