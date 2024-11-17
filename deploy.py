@@ -242,9 +242,10 @@ def predict_page():
                 st.success(f"**Predicted IC50**: {predicted_ic50:.4f} µM")
                 # st.info(f"**Predicted pIC50**: {predicted_pic50:.4f}")
                 
-                # Calculate and display IC50 in molar (M)
-                predicted_ic50_molar = predicted_ic50 / 1_000_000  # Convert µM to M
-                st.success(f"**Predicted IC50**: {predicted_ic50_molar:.4e} M")
+            
+                # Calculate and display IC50 in molar (nano Molar)
+                predicted_ic50_nanomolar = predicted_ic50 * 1_000  # Convert µM to nM
+                st.success(f"**Predicted IC50**: {predicted_ic50_nanomolar:.4e} nM")
 
                 # Display Classification
                 st.success(f"**Classification**: {category}")
