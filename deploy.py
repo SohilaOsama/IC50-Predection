@@ -200,7 +200,7 @@ def home_page():
     """)
 
     # Navigation button
-    if st.button("Start Prediction and Classification"):
+    if st.button("Start Prediction"):
         st.session_state.page = "predict_page"
 
 def predict_page():
