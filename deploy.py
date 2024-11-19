@@ -184,7 +184,7 @@ def home_page():
     """
     Display the home page with an introduction and navigation button.
     """
-    st.title("IC50 Prediction and Compound Classification for COVID-19 Compounds")
+    st.title("IC50 Prediction for COVID-19 Compounds")
 
     # Display an image on the homepage
     try:
@@ -207,7 +207,7 @@ def predict_page():
     """
     Display the prediction page where users can input SMILES strings.
     """
-    st.title("Predict IC50 Value and Classify Compound")
+    st.title("Predict IC50 Value")
 
     # Instruction Steps
     st.write("""
