@@ -197,7 +197,6 @@ def home_page():
         **IC50** measures the effectiveness of a substance in inhibiting a specific biological or biochemical function. 
         Predicting the IC50 value of compounds for COVID-19 can aid in understanding their therapeutic potential.
         
-        Additionally, the compound can be classified into categories (**Active**, **Inactive**, **Semi-active**) based on its properties.
     """)
 
     # Navigation button
@@ -206,7 +205,7 @@ def home_page():
 
 def predict_page():
     """
-    Display the prediction and classification page where users can input SMILES strings.
+    Display the prediction page where users can input SMILES strings.
     """
     st.title("Predict IC50 Value and Classify Compound")
 
@@ -229,14 +228,14 @@ def predict_page():
                 predicted_ic50, predicted_pic50 = predict_ic50(smiles_input)
 
                 # Classification
-                classification_result = classify_compound(smiles_input)
+                #classification_result = classify_compound(smiles_input)
 
                 # Extracted Features
                 features = extract_features(smiles_input)
 
             # Check if all results are available
-            if (predicted_ic50 is not None) and (classification_result is not None) and (features is not None):
-                category, _ = classification_result  # Ignore confidence
+            #if (predicted_ic50 is not None) and (classification_result is not None) and (features is not None):
+               # category, _ = classification_result  # Ignore confidence
 
                 # Display IC50 prediction
                 st.success(f"**Predicted IC50**: {predicted_ic50:.4f} µM")
@@ -248,7 +247,7 @@ def predict_page():
                 st.success(f"**Predicted IC50**: {predicted_ic50_nanomolar} nM")
 
                 # Display Classification
-                st.success(f"**Classification**: {category}")
+                #st.success(f"**Classification**: {category}")
 
                 # Display extracted features in a table
                 st.write("### Extracted Features:")
@@ -280,8 +279,9 @@ def predict_page():
                     st.write(f"**Lipophilic Ligand Efficiency (Lipophilic LE)**: {lipophilic_ligand_efficiency:.4f} (log units)" if lipophilic_ligand_efficiency is not None else "Lipophilic Ligand Efficiency could not be calculated.")
                     st.write(f"**Ligand Efficiency per LogP**: {ligand_efficiency_per_logp:.4f} (log units)" if ligand_efficiency_per_logp is not None else "Ligand Efficiency per LogP could not be calculated.")
 
-            else:
-                st.error("Unable to generate prediction or extract features. Please check the SMILES string.")
+                else:
+                    
+                 st.error("Unable to generate prediction or extract features. Please check the SMILES string.")
 
     # Navigation buttons for another prediction or returning home
     st.write("---")  # Horizontal line for separation
