@@ -189,7 +189,7 @@ def home_page():
     # Display an image on the homepage
     try:
         image = Image.open('assets/virus.jpg')  # Ensure this path is correct
-        st.image(image, use_column_width=True)
+        st.image(image, use_container_width=True)
     except FileNotFoundError:
         st.warning("Image 'assets/virus.jpg' not found. Please ensure the image path is correct.")
 
