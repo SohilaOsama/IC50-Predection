@@ -252,7 +252,7 @@ def predict_page():
                 # Display extracted features in a table
                 st.write("### Extracted Features:")
                 feature_df = pd.DataFrame([features])
-                st.table(feature_df)
+                st.dataframe(feature_df)
 
                 # Button to download features as CSV
                 csv = feature_df.to_csv(index=False)
