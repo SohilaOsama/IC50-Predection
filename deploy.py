@@ -208,7 +208,6 @@ def predict_page():
     Display the prediction page where users can input SMILES strings.
     """
     st.title("Predict IC50 Value")
-    st.markdown("<h2 style='color: #336699;'>Compound IC50 Prediction and Classification</h2>", unsafe_allow_html=True)
 
     # Instruction Steps
     st.write("""
@@ -229,24 +228,26 @@ def predict_page():
                 predicted_ic50, predicted_pic50 = predict_ic50(smiles_input)
 
                 # Classification
-                classification_result = classify_compound(smiles_input)
+                #classification_result = classify_compound(smiles_input)
 
                 # Extracted Features
                 features = extract_features(smiles_input)
 
             # Check if all results are available
-            if (predicted_ic50 is not None) and (classification_result is not None) and (features is not None):
-                category, confidence = classification_result  # Ignore confidence
+            #if (predicted_ic50 is not None) and (classification_result is not None) and (features is not None):
+               # category, _ = classification_result  # Ignore confidence
 
                 # Display IC50 prediction
                 st.success(f"**Predicted IC50**: {predicted_ic50:.4f} µM")
+                # st.info(f"**Predicted pIC50**: {predicted_pic50:.4f}")
                 
+            
                 # Calculate and display IC50 in molar (nano Molar)
                 predicted_ic50_nanomolar = round(predicted_ic50 * 1_000, 1)   # Convert µM to nM
                 st.success(f"**Predicted IC50**: {predicted_ic50_nanomolar} nM")
 
                 # Display Classification
-                st.success(f"**Classification**: {category} (Confidence: {confidence*100:.2f}%)")
+                #st.success(f"**Classification**: {category}")
 
                 # Display extracted features in a table
                 st.write("### Extracted Features:")
@@ -278,8 +279,9 @@ def predict_page():
                     st.write(f"**Lipophilic Ligand Efficiency (Lipophilic LE)**: {lipophilic_ligand_efficiency:.4f} (log units)" if lipophilic_ligand_efficiency is not None else "Lipophilic Ligand Efficiency could not be calculated.")
                     st.write(f"**Ligand Efficiency per LogP**: {ligand_efficiency_per_logp:.4f} (log units)" if ligand_efficiency_per_logp is not None else "Ligand Efficiency per LogP could not be calculated.")
 
-            else:
-                st.error("Unable to generate prediction or extract features. Please check the SMILES string.")
+                else:
+                    
+                 st.error("Unable to generate prediction or extract features. Please check the SMILES string.")
 
     # Navigation buttons for another prediction or returning home
     st.write("---")  # Horizontal line for separation
